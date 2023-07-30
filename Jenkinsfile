@@ -2,27 +2,27 @@ pipeline {
     agent any 
     stages {
         stage('Preparing') {
-            step {
+            steps{
                 sh 'echo Preparing'
             }
         }
         stage('Git Pulling') {
-            step{
+            steps{
                 git branch: 'master', url: 'https://github.com/AmanPathak-DevOps/CICD-Ansible.git'
             }
         }
         stage('Playbook Initializing') {
-            step{
+            steps{
                 sh 'echo Playbook Initializing'
             }
         }
         stage('Playbook Running') {
-            step{
+            steps{
                 ansiblePlaybook credentialsId: 'ansible-connect', disableHostKeyChecking: true, inventory: '/etc/ansible/hosts', playbook: 'Nginx-Uninstallation.yml'
             }
         }
         stage('Playbook deployed') {
-            step{
+            steps{
                 sh 'echo Deployment done!!!!'
             }
         }
