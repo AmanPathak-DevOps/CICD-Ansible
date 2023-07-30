@@ -1,3 +1,4 @@
+properties([parameters(string(defaultValue: 'Installation', name: 'Playbook Name'))])
 pipeline {
     agent any 
     stages {
@@ -18,7 +19,7 @@ pipeline {
         }
         stage('Playbook Running') {
             steps{
-                ansiblePlaybook credentialsId: 'ansible-connect', disableHostKeyChecking: true, inventory: '/etc/ansible/hosts', playbook: 'Nginx-Uninstallation.yml'
+                ansiblePlaybook credentialsId: 'ansible-connect', disableHostKeyChecking: true, inventory: '/etc/ansible/hosts', playbook: ${Playbook Name}
             }
         }
         stage('Playbook deployed') {
