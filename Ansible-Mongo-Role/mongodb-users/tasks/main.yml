@@ -7,7 +7,8 @@
     database: "admin"
     name: "{{ mongodb_root_user }}"
     password: "{{ mongodb_root_pwd }}"
-    roles: "root"
+    roles: 
+      - "root"
 
 - name: Creating MongoDB administrative user siteUserAdmin
   mongodb_user:
