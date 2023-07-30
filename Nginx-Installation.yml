@@ -10,3 +10,9 @@
       apt:  
         name: nginx
         state: present
+
+    - name: Enabling and Starting Nginx
+      service: 
+        name: nginx
+        state: started
+        enabled: yes
