@@ -1,4 +1,4 @@
-properties([parameters(string(defaultValue: 'Installation', name: 'Playbook-Name'))])
+properties([parameters([string(defaultValue: 'Installation', name: 'Playbook-Name')])])
 pipeline {
     agent any 
     stages {
