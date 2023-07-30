@@ -5,7 +5,7 @@ mongodb_port: "27017"
 db_name: "aman_db"
 
 mongodb_root_user: "root"
-mongodb_root_pwd: "Root@Toor"
+mongodb_root_password: "Root@Toor"
 
 mongodb_admin_user: "admin"
 mongodb_admin_pwd: "Admin@Nimda"

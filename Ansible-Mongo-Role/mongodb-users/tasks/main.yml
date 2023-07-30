@@ -1,14 +1,11 @@
 ---
-# tasks file for mongodb-users
-
-- name: Creating root user 
+- name: Create MongoDB root user
   mongodb_user:
-    login_port: "{{ mongodb_port }}"
+    login_port: "27017"
     database: "admin"
     name: "{{ mongodb_root_user }}"
-    password: "{{ mongodb_root_pwd }}"
-    roles: 
-      - "root"
+    password: "{{ mongodb_root_password }}"
+    roles: "root"
 
 - name: Creating MongoDB administrative user siteUserAdmin
   mongodb_user:
