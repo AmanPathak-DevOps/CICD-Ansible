@@ -31,7 +31,7 @@ pipeline {
                     if (params['Playbook Action'] == 'Dry-Run') {
                         sh "ansible-playbook --check -i /etc/ansible/hosts --private-key ${credentials('ansible-connect')} ${params["Playbook Name"]}.yml"
                     } else if (params['Playbook Action'] == 'Playbook-deploy') {
-                        ansiblePlaybook credentialsId: 'ansible-connect', disableHostKeyChecking: true, inventory: '/etc/ansible/hosts', playbook: "${params['Playbook Name']}.yml"
+                        ansiblePlaybook credentialsId: 'ansible-connect', disableHostKeyChecking: true, inventory: 'hosts', playbook: "${params['Playbook Name']}.yml"
                     }
                 }
             }

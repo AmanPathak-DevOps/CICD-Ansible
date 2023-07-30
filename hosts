@@ -1,0 +1,9 @@
+[mongodb-servers]
+server1 ansible_host=172.31.86.108
+server2 ansible_host=172.31.90.239
+server3 ansible_host=172.31.95.35
+server4 ansible_host=172.31.92.207
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+ansible_user=ubuntu
