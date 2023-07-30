@@ -9,7 +9,7 @@
   command: lsb_release -rs
   register: os_version
 
-- name: Checking whether focal-security repo exits or not
+- name: Checking whether focal-security repo exists or not
   stat: 
     path: /etc/apt/sources.list.d/focal-security.list
   register: focal_security_repo
@@ -64,7 +64,7 @@
   shell: sudo sh -c 'echo deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongo-key.gpg] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/{{ mongodb_version }} multiverse > /etc/apt/sources.list.d/mongodb-org-{{ mongodb_version }}.list'
   args: 
     executable: /bin/bash
-  when: not mondodb_repo_exists.stat.exists
+  when: not mongodb_repo_exists.stat.exists
 
 - name: Updating the Packages
   apt: 
