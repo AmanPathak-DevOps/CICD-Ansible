@@ -1,0 +1,10 @@
+--- # Installing Nginx
+- hosts: nginx_server
+  user: ubuntu
+  become: yes
+  connection: ssh
+  gathering_facts: yes
+
+  tasks:
+    - name: Installing Nginx
+      action: apt name=nginx action=present
