@@ -1,4 +1,10 @@
 ---
+
+- name:  Installing Apache2
+  apt:
+    name: apache2
+    state: latest
+
 - name: Create MongoDB root user
   mongodb_user:
     login_port: "27017"

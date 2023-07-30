@@ -1,5 +1,6 @@
 ---
 # vars file for mongodb-users
+mongodb_version: "6.0"
 mongodb_port: "27017"
 
 db_name: "aman_db"
