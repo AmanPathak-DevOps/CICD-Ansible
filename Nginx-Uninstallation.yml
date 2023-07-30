@@ -7,4 +7,6 @@
 
   tasks:
     - name: uninstalling nginx
-      action: apt name=nginx state=absent
+      apt:
+        name: nginx
+        state: absent
