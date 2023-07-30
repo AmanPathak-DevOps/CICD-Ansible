@@ -3,7 +3,7 @@
   user: ubuntu
   become: yes
   connection: ssh
-  gathering_facts: yes
+  gather_facts: yes
 
   tasks:
     - name: Installing Nginx
