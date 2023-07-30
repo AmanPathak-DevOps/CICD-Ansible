@@ -7,13 +7,13 @@
 
   tasks:
 
-    - name: "Uninstall NginX"
-      apt:
-        name: nginx
-        state: absent
-        autoremove: yes
-
     - name: stopping nginx
       service:
         name: nginx
-        state: stopped
+        state: stopped  
+
+    - name: "Uninstall NginX"
+      apt:
+        name: nginx-common
+        state: absent
+        autoremove: yes
