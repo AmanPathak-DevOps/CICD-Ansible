@@ -6,6 +6,12 @@
   gather_facts: yes
 
   tasks:
+
+    - name: stopping nginx
+      apt:
+        name: nginx
+        state: stopped
+        
     - name: uninstalling nginx
       apt:
         name: nginx
