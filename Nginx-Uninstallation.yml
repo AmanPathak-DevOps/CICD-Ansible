@@ -8,10 +8,10 @@
   tasks:
 
     - name: stopping nginx
-      apt:
+      service:
         name: nginx
         state: stopped
-        
+
     - name: uninstalling nginx
       apt:
         name: nginx
