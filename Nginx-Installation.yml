@@ -7,4 +7,6 @@
 
   tasks:
     - name: Installing Nginx
-      action: apt name=nginx action=present
+      apt:  
+        name: nginx
+        state: present
