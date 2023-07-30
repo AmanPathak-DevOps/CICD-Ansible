@@ -1,4 +1,4 @@
-properties([parameters([string(defaultValue: 'Installation', name: 'Playbook Name')])])
+properties([parameters([string(defaultValue: 'Installation', name: 'Playbook-Name')])])
 pipeline {
     agent any 
     stages {
@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Playbook Running') {
             steps{
-                ansiblePlaybook credentialsId: 'ansible-connect', disableHostKeyChecking: true, inventory: '/etc/ansible/hosts', playbook: "${params['Playbook Name']}"
+                ansiblePlaybook credentialsId: 'ansible-connect', disableHostKeyChecking: true, inventory: '/etc/ansible/hosts', playbook: "${params['Playbook-Name']}"
             }
         }
         stage('Playbook deployed') {
