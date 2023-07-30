@@ -1,7 +1,9 @@
 - name: Installing and configuring MongoDB 
   hosts: mongodb_servers
   connection: ssh
-  become: true
+  become_user: root
+  become_method: sudo
+  become: true 
   gather_facts: yes
   roles:
     - mongodb
