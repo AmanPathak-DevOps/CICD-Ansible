@@ -1,0 +1,14 @@
+---
+# vars file for mongodb-users
+mongodb_port: "27017"
+
+db_name: "aman_db"
+
+mongodb_root_user: "root"
+mongodb_root_pwd: "Root@Toor"
+
+mongodb_admin_user: "admin"
+mongodb_admin_pwd: "Admin@Nimda"
+
+mongodb_backup_user: "backup/usr"
+mongodb_backup_pwd: "backup/usr@USR"

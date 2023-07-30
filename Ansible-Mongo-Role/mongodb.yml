@@ -1,0 +1,8 @@
+- name: Installing and configuring MongoDB 
+  hosts: mongodb_servers
+  connection: ssh
+  become: true
+  gather_facts: yes
+  roles:
+    - mongodb
+    - mongodb-users

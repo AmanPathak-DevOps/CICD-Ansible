@@ -1,0 +1,34 @@
+---
+# tasks file for mongodb-users
+
+- name: Creating root user 
+  mongodb_user:
+    login_port: "{{ mongodb_port }}"
+    database: "admin"
+    name: "{{ mongodb_root_user }}"
+    password: "{{ mongodb_root_pwd }}"
+    roles: "root"
+
+- name: Creating MongoDB administrative user siteUserAdmin
+  mongodb_user:
+    login_user: "{{ mongodb_root_user }}"
+    login_password: "{{ mongodb_root_pwd }}"
+    login_port: "{{ mongodb_port }}"
+    database: "{{ db_name }}"
+    name: "{{ mongodb_admin_user }}"
+    password: "{{ mongodb_admin_pwd }}"
+    roles: 
+      - { db: "admin", role: "readWrite" }
+      - { db: "{{ db_name }}", role: "readWrite" }
+
+
+- name: Creating MongoDB backup user siteUserAdmin
+  mongodb_user: 
+    login_user: "{{ mongodb_root_user }}"
+    login_password: "{{ mongodb_root_pwd }}"
+    login_port: "{{ mongodb_port }}"
+    database: "{{ db_name }}"
+    name: "{{ mongodb_backup_user }}"
+    password: "{{ mongodb_backup_pwd }}"
+    roles:
+      - { db: "admin", role: "backup" }

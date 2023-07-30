@@ -1,0 +1,135 @@
+---
+# Installing MongoDB on Ubuntu22.04
+
+- name: Updating the Packages
+  apt:
+    update_cache: yes
+
+- name: Checking Ubuntu Version
+  command: lsb_release -rs
+  register: os_version
+
+- name: Checking whether focal-security repo exits or not
+  stat: 
+    path: /etc/apt/sources.list.d/focal-security.list
+  register: focal_security_repo
+
+- name: Adding focal-security repo
+  shell: echo "deb http://security.ubuntu.com/ubuntu focal-security main" | sudo tee /etc/apt/sources.list.d/focal-security.list
+  when: os_version.stdout == "22.04" and not focal_security_repo.stat.exists
+
+- name: Updating the Packages
+  apt:
+    update_cache: yes
+  when: os_version.stdout == "22.04"
+
+- name: Installing libssl1.1 package provides the OpenSSL 1.1 shared libraries
+  apt:
+    name: libssl1.1
+    state: present
+  when: os_version.stdout == "22.04"
+
+- name: Installing dependencies of MongoDB
+  package: 
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop:
+    - curl
+    - gnupg
+    - python3-pip
+  become: true
+
+- name: Installing Pymongo to interact with mongo easily
+  pip:
+    name: pymongo
+
+- name: Checking whether MongoDB APT key exists or not
+  stat: 
+    path: /usr/share/keyrings/mongo-key.gpg
+  register: mongo_key_exists
+
+- name: Adding MongoDB key
+  shell: "curl -fsSL https://www.mongodb.org/static/pgp/server-{{ mongodb_version }}.asc | sudo gpg --dearmour -o /usr/share/keyrings/mongo-key.gpg"
+  args:
+    executable: /bin/bash
+  when: not mongo_key_exists.stat.exists
+
+- name: Checking whether MongoDB repo exists or not
+  stat: 
+    path: /etc/apt/sources.list.d/mongodb-org-{{ mongodb_version }}.list
+  register: mongodb_repo_exists
+
+- name: Adding the MongoDB repo
+  shell: sudo sh -c 'echo deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongo-key.gpg] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/{{ mongodb_version }} multiverse > /etc/apt/sources.list.d/mongodb-org-{{ mongodb_version }}.list'
+  args: 
+    executable: /bin/bash
+  when: not mondodb_repo_exists.stat.exists
+
+- name: Updating the Packages
+  apt: 
+    update_cache: yes
+
+- name: Installing MongoDB Packages
+  apt: 
+    name: mongodb-org
+    state: latest
+
+- name: Enabling and Starting the mongoDB service
+  service:
+    name: mongod
+    state: started
+    enabled: yes
+
+- name: Creating root user 
+  mongodb_user:
+    login_port: "{{ mongodb_port }}"
+    database: "admin"
+    name: "{{ mongodb_root_user }}"
+    password: "{{ mongodb_root_pwd }}"
+    roles: "root"
+
+- name: Creating MongoDB administrative user siteUserAdmin
+  mongodb_user:
+    login_user: "{{ mongodb_root_user }}"
+    login_password: "{{ mongodb_root_pwd }}"
+    login_port: "{{ mongodb_port }}"
+    database: "{{ db_name }}"
+    name: "{{ mongodb_admin_user }}"
+    password: "{{ mongodb_admin_pwd }}"
+    roles: 
+      - { db: "admin", role: "readWrite" }
+      - { db: "{{ db_name }}", role: "readWrite" }
+
+
+- name: Creating MongoDB backup user siteUserAdmin
+  mongodb_user: 
+    login_user: "{{ mongodb_root_user }}"
+    login_password: "{{ mongodb_root_pwd }}"
+    login_port: "{{ mongodb_port }}"
+    database: "{{ db_name }}"
+    name: "{{ mongodb_backup_user }}"
+    password: "{{ mongodb_backup_pwd }}"
+    roles:
+      - { db: "admin", role: "backup" }
+
+
+- name: Enabling Remote Connection  in MongoDB
+  lineinfile:
+    path: /etc/mongod.conf
+    regexp: '^ *bindIp:.*'
+    line: '  bindIp: 0.0.0.0'
+    state: present
+    backup: yes
+  notify: 
+    - Restart MongoDB service
+
+- name: Enabling authentication in MongoDB  
+  lineinfile:
+    path: /etc/mongod.conf
+    line: "security:\n  authorization: enabled"
+    insertafter: "^#security:"
+    state: present
+    backup: yes
+  notify: 
+  - Restart MongoDB service

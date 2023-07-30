@@ -1,0 +1,8 @@
+---
+# Restart MongoDB service
+
+- name: Restart MongoDB service
+  service: 
+    name: mongod
+    state: started
+
