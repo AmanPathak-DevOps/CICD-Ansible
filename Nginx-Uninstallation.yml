@@ -1,0 +1,10 @@
+--- # Uninstallig Nginx
+- hosts: nginx_server
+  user: ubuntu
+  become: yes
+  connection: ssh
+  gather_facts: yes
+
+  tasks:
+    - name: uninstalling nginx
+      action: apt name=nginx state=absent
