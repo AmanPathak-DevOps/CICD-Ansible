@@ -3,7 +3,7 @@
 - name: Cloning the repo
   git:
     repo: https://github.com/cloudacademy/static-website-example.git
-    dest: "/home/ubuntu"
+    dest: "/home/ubuntu/"
     update: yes
 
 - name: Placing the files to the /var/www/html/
