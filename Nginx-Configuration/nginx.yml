@@ -1,0 +1,8 @@
+- hosts: nginx_server
+  user: ubuntu
+  become: yes
+  connection: ssh
+  gather_facts: yes
+  roles:
+    - nginx
+    - nginx_static_website

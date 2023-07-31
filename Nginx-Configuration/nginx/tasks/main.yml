@@ -1,0 +1,12 @@
+---
+# installation, starting and enabling for nginx
+- name: Installing Nginx 
+  apt:
+    name: nginx
+    state: present
+
+- name: Enabling and Starting the Nginx
+  service: 
+    name: nginx
+    state: started
+    enabled: yes
