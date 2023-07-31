@@ -7,4 +7,4 @@
     update: yes
 
 - name: Placing the files to the /var/www/html/
-  command: mv /home/ubuntu/static-website-example/* /var/www/html/
+  command: mv /tmp/static-website-example/* /var/www/html/
