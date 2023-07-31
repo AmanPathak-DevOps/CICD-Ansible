@@ -1,10 +1,16 @@
 ---
 # tasks file for nginx_static_website
+- name: Deleting Previous Workspace
+  shell: rm -rf /tmp/static-website-example
+  ignore_errors: true
+
 - name: Cloning the repo
   git:
     repo: https://github.com/cloudacademy/static-website-example.git
     dest: "/tmp/static-website-example"
     update: yes
+- name: Deleting Previous Workspace
+  shell: rm -rf /var/www/html/*
 
 - name: Placing the files to the /var/www/html/
-  command: mv /tmp/static-website-example/ /var/www/html/
+  shell: mv /tmp/static-website-example/* /var/www/html/
