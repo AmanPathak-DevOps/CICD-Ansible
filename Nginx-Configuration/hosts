@@ -1,3 +1,4 @@
+# Copy this in your /etc/ansible/hosts file(Ansible Master)
 [nginx_server]
 server1 ansible_host=172.31.86.108
 server2 ansible_host=172.31.90.239
